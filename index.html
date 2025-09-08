@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescod Advantage Profile Evaluation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f23;
+            color: #e6e6e6;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #1f2937;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #9ca3af;
+        }
+
+        .card {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #374151;
+        }
+
+        .how-it-works {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .how-it-works h3 {
+            color: #4f46e5;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .how-it-works ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .how-it-works li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .how-it-works li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #374151;
+            color: #e6e6e6;
+            border: 1px solid #4b5563;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #4f46e5;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 2px solid #4b5563;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .choice:hover {
+            border-color: #4f46e5;
+            background: #4b5563;
+        }
+
+        .choice.selected {
+            border-color: #4f46e5;
+            background: #312e81;
+        }
+
+        .choice input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .other-input {
+            margin-top: 15px;
+        }
+
+        .other-textarea {
+            width: 100%;
+            min-height: 80px;
+            background: #1f2937;
+            border: 2px solid #4b5563;
+            border-radius: 8px;
+            padding: 12px;
+            color: #e6e6e6;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .other-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .tag-picker {
+            margin-top: 15px;
+        }
+
+        .tag-picker-title {
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            border-color: #4f46e5;
+        }
+
+        .tag.selected {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .round-overview {
+            text-align: center;
+        }
+
+        .round-title {
+            font-size: 2rem;
+            color: #4f46e5;
+            margin-bottom: 20px;
+        }
+
+        .summary-sentence {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e6e6e6;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .score-item {
+            background: #374151;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .drivers {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .drivers h4 {
+            color: #4f46e5;
+            margin-bottom: 15px;
+        }
+
+        .drivers ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .drivers li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .drivers li::before {
+            content: "▲";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+        }
+
+        .results-section {
+            text-align: center;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .dimension-item {
+            background: #374151;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .dimension-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e6e6e6;
+        }
+
+        .dimension-score {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .top-edges, .growth-levers {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .top-edges h3, .growth-levers h3 {
+            color: #4f46e5;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .edge-item, .lever-item {
+            background: #1f2937;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .growth-levers .lever-item {
+            border-left-color: #f59e0b;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 40px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- Extra mobile refinements --- */
+        @media (max-width: 600px) {
+            .choice {
+                font-size: 1rem;
+                padding: 18px;
+                border-width: 2px;
+            }
+
+            .choices {
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 16px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            textarea.other-textarea {
+                font-size: 1rem;
+                padding: 14px;
+            }
+
+            .tags {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .tag {
+                flex: 1 1 calc(50% - 10px);
+                text-align: center;
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+
+            .progress-text {
+                font-size: 0.95rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .tagline {
+                font-size: 0.95rem;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Prescod Advantage Profile Evaluation</h1>
+            <p class="tagline">Identify the strengths that give you a competitive advantage.</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0 / 25</div>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="card">
+            <div class="how-it-works">
+                <h3>How it works</h3>
+                <ul>
+                    <li>Answer 25 questions across 5 rounds</li>
+                    <li>Get insights after each round</li>
+                    <li>Discover your top strengths and growth areas</li>
+                    <li>Share your results with a unique link</li>
+                </ul>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="startAssessment()">Start Assessment</button>
+                <button class="btn btn-secondary" onclick="resumeAssessment()" id="resumeBtn">Resume</button>
+            </div>
+        </div>
+
+        <!-- Questions Screen -->
+        <div id="questionsScreen" class="hidden">
+            <div class="card">
+                <h2 class="question-title" id="roundTitle">Round 1</h2>
+                <div id="questionsContainer"></div>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="goBack()" id="backBtn">Back</button>
+                    <button class="btn btn-secondary" onclick="skipRound()" id="skipBtn">Skip Round</button>
+                    <button class="btn btn-primary" onclick="nextRound()" id="nextBtn" disabled>Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Round Overview Screen -->
+        <div id="roundOverviewScreen" class="hidden">
+            <div class="card round-overview">
+                <h2 class="round-title" id="overviewTitle">Round 1 Overview</h2>
+                <p class="summary-sentence" id="overviewSummary"></p>
+                <div class="score-grid" id="scoreGrid"></div>
+                <div class="drivers" id="driversSection"></div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="continueToNextRound()" id="continueBtn">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="hidden">
+            <div class="card results-section">
+                <h2 class="round-title">Your Advantage Profile</h2>
+                <p class="summary-sentence" id="finalSummary"></p>
+                
+                <div class="results-grid" id="resultsGrid"></div>
+                
+                <div class="top-edges" id="topEdges"></div>
+                <div class="growth-levers" id="growthLevers"></div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="copyShareLink()">Copy Share Link</button>
+                    <button class="btn btn-secondary" onclick="startOver()">Start Over</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © Prescod 2025 · Prescod Advantage Profile Evaluation
+        </div>
+    </div>
+
+    <script>
+        // Data Model
+        const QUESTIONS = [
+            {
+                q: "You have 15 minutes to fix a machine without a manual. What's your first move?",
+                a: [
+                    { t: "Start tinkering and see what works.", k: ["learning_do"] },
+                    { t: "Step back and look for patterns in the problem.", k: ["systems"] },
+                    { t: "Ask others around if they've seen this before.", k: ["influence"] },
+                    { t: "Try multiple quick fixes until something sticks.", k: ["resilience"] }
+                ]
+            },
+            {
+                q: "You're given $100 and must triple it in 24 hours. What's your instinct?",
+                a: [
+                    { t: "Freelance a quick service (like design, editing, etc.).", k: ["entrepreneur"] },
+                    { t: "Find a high-demand product, buy in bulk, and resell at profit.", k: ["entrepreneur"] },
+                    { t: "Gamble on a risky high-upside play.", k: ["risk"] },
+                    { t: "Crowdsource donations and upsell with a product.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "You're put in charge of 5 people who don't want to be there. What do you do first?",
+                a: [
+                    { t: "Lay out strict roles and expectations.", k: ["leadership"] },
+                    { t: "Connect with them, listen, and align on why it matters.", k: ["emotional_intel"] },
+                    { t: "Offer incentives or raise the stakes to boost buy-in.", k: ["influence"] },
+                    { t: "Replace the team if possible.", k: ["leadership"] }
+                ]
+            },
+            {
+                q: "You fail three times in a row at something important. What's your natural response?",
+                a: [
+                    { t: "Double down until it works.", k: ["resilience"] },
+                    { t: "Delegate the task to someone better suited or seek help.", k: ["systems"] },
+                    { t: "Quit and pick a better target.", k: ["strategy"] },
+                    { t: "Take a break and return later.", k: ["emotional_intel"] }
+                ]
+            },
+            {
+                q: "You must choose between two investments: one solid but boring, the other risky and exciting. Which do you pick?",
+                a: [
+                    { t: "Risky but exciting.", k: ["risk"] },
+                    { t: "Solid and proven (foundation first).", k: ["discipline"] },
+                    { t: "Split funds across both.", k: ["strategy"] },
+                    { t: "Wait until you have more information.", k: ["learning_structured"] }
+                ]
+            },
+            {
+                q: "You're asked to review 100 receipts for errors. What's your approach?",
+                a: [
+                    { t: "Skim quickly for anomalies.", k: ["systems"] },
+                    { t: "Check each one line by line.", k: ["discipline"] },
+                    { t: "Sort them into categories first, then review.", k: ["systems"] },
+                    { t: "Automate the process or ask for help.", k: ["entrepreneur"] }
+                ]
+            },
+            {
+                q: "You're explaining something complex to a beginner. How do you go about it?",
+                a: [
+                    { t: "Use analogies and stories.", k: ["influence"] },
+                    { t: "Break it into simple steps.", k: ["systems"] },
+                    { t: "Show them by example.", k: ["learning_do"] },
+                    { t: "Give the big picture first, then details.", k: ["strategy"] }
+                ]
+            },
+            {
+                q: "Two coworkers are arguing in front of you about who's responsible for a mistake. What do you do first?",
+                a: [
+                    { t: "Step in and mediate directly.", k: ["leadership"] },
+                    { t: "Gather facts quietly before saying anything.", k: ["strategy"] },
+                    { t: "De-escalate with humor or empathy.", k: ["emotional_intel"] },
+                    { t: "Assign blame where it seems obvious and move on.", k: ["discipline"] }
+                ]
+            },
+            {
+                q: "Your company rolls out new software today. What's your instinct?",
+                a: [
+                    { t: "Dive in and press buttons to figure it out.", k: ["learning_do"] },
+                    { t: "Look for a tutorial or manual first.", k: ["learning_structured"] },
+                    { t: "Ask an expert to walk you through it.", k: ["influence"] },
+                    { t: "Mix trial-and-error with quick references.", k: ["systems"] }
+                ]
+            },
+            {
+                q: "You're running late and stuck in traffic. What do you do?",
+                a: [
+                    { t: "Get stressed but push through.", k: ["resilience"] },
+                    { t: "Calmly accept what you can't control.", k: ["emotional_intel"] },
+                    { t: "Use the time to think or plan.", k: ["strategy"] },
+                    { t: "Call ahead and proactively reschedule.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "You're facing a major decision (job, investment, etc.). How do you decide?",
+                a: [
+                    { t: "Decide quickly — action beats hesitation.", k: ["risk"] },
+                    { t: "Delay until you've gathered every detail.", k: ["learning_structured"] },
+                    { t: "Make a provisional choice and adjust later.", k: ["learning_do"] },
+                    { t: "Consult trusted people before deciding.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "You must design a fun event for 100 people with only $200. What's your approach?",
+                a: [
+                    { t: "Use DIY hacks to stretch the budget.", k: ["entrepreneur"] },
+                    { t: "Focus on creating a unique atmosphere or experience.", k: ["emotional_intel"] },
+                    { t: "Seek sponsors or partners to expand resources.", k: ["influence"] },
+                    { t: "Simplify to 1–2 impactful elements.", k: ["systems"] }
+                ]
+            },
+            {
+                q: "You need to persuade someone resistant to your idea. What's your tactic?",
+                a: [
+                    { t: "Present facts and data.", k: ["strategy"] },
+                    { t: "Appeal to their emotions or values.", k: ["emotional_intel"] },
+                    { t: "Use authority and confidence.", k: ["leadership"] },
+                    { t: "Ask guiding questions that lead them to your conclusion.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "A friend pitches you a wild business idea. How do you react?",
+                a: [
+                    { t: "Get excited and want to jump in.", k: ["risk"] },
+                    { t: "Stay skeptical and ask for proof.", k: ["discipline"] },
+                    { t: "Stay curious and ask questions to test it.", k: ["learning_structured"] },
+                    { t: "Stay neutral and focus on your own priorities.", k: ["strategy"] }
+                ]
+            },
+            {
+                q: "You're facing an important but boring task (like taxes or cleaning). What do you do?",
+                a: [
+                    { t: "Push through immediately and get it done.", k: ["discipline"] },
+                    { t: "Delay until the pressure forces you.", k: ["resilience"] },
+                    { t: "Break it into chunks and schedule them.", k: ["systems"] },
+                    { t: "Outsource it if the return is worth it.", k: ["entrepreneur"] }
+                ]
+            },
+            {
+                q: "Months of work fail publicly. What's your instinct?",
+                a: [
+                    { t: "Double down and try again.", k: ["resilience"] },
+                    { t: "Step back, reflect, then re-engage.", k: ["emotional_intel"] },
+                    { t: "Pivot quickly to something new.", k: ["learning_do"] },
+                    { t: "Seek mentorship or feedback to learn.", k: ["learning_structured"] }
+                ]
+            },
+            {
+                q: "You meet someone new but feel they're untrustworthy. How do you handle it?",
+                a: [
+                    { t: "Trust your gut and keep your distance.", k: ["emotional_intel"] },
+                    { t: "Ignore your gut until you have evidence.", k: ["discipline"] },
+                    { t: "Stay polite but test them quietly.", k: ["strategy"] },
+                    { t: "Give them the benefit of the doubt fully.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "Your team is panicking with a big deadline at risk. What's your first move?",
+                a: [
+                    { t: "Calm them down and refocus their energy.", k: ["emotional_intel"] },
+                    { t: "Take control and assign tasks urgently.", k: ["leadership"] },
+                    { t: "Step back and create a mini-plan immediately.", k: ["strategy"] },
+                    { t: "Call outside help to buy time.", k: ["systems"] }
+                ]
+            },
+            {
+                q: "You have 5 hours to provide maximum value to a key person. What do you do?",
+                a: [
+                    { t: "Ask them their biggest challenge and try to solve it.", k: ["influence"] },
+                    { t: "Share your unique knowledge or skills.", k: ["entrepreneur"] },
+                    { t: "Connect them with useful people or resources.", k: ["systems"] },
+                    { t: "Listen deeply and reflect their ideas back.", k: ["emotional_intel"] }
+                ]
+            },
+            {
+                q: "You're winning a competition, but midway the rules change. How do you respond?",
+                a: [
+                    { t: "Push back against the change.", k: ["resilience"] },
+                    { t: "Adapt instantly and play the new game.", k: ["learning_do"] },
+                    { t: "Pause until you fully understand the new rules.", k: ["learning_structured"] },
+                    { t: "Use the confusion to find a loophole.", k: ["entrepreneur"] }
+                ]
+            },
+            {
+                q: "When you think about why you push yourself, what feels most true?",
+                a: [
+                    { t: "To prove myself against challenges.", k: ["resilience"] },
+                    { t: "To create freedom and security for myself and others.", k: ["entrepreneur"] },
+                    { t: "To make an impact that outlasts me.", k: ["strategy"] },
+                    { t: "To experience life fully.", k: ["risk"] }
+                ]
+            },
+            {
+                q: "You're thrown into a role with zero instructions and told \"figure it out.\" What's your instinct?",
+                a: [
+                    { t: "Feel excited — you love the freedom.", k: ["risk"] },
+                    { t: "Feel overwhelmed but start piecing things together.", k: ["resilience"] },
+                    { t: "Look for examples or templates to copy.", k: ["learning_structured"] },
+                    { t: "Ask clarifying questions until you have enough clarity.", k: ["influence"] }
+                ]
+            },
+            {
+                q: "In group projects, people usually see you as:",
+                a: [
+                    { t: "The driver — keeping everyone moving forward.", k: ["leadership"] },
+                    { t: "The glue — keeping morale and relationships strong.", k: ["emotional_intel"] },
+                    { t: "The strategist — designing the approach.", k: ["strategy"] },
+                    { t: "The specialist — quietly contributing expertise.", k: ["discipline"] }
+                ]
+            },
+            {
+                q: "When you picture success, your mind naturally zooms in on:",
+                a: [
+                    { t: "The next 30–60 days (short-term wins).", k: ["discipline"] },
+                    { t: "The next 1–2 years (medium-term path).", k: ["systems"] },
+                    { t: "The next 5–10 years (long-term vision).", k: ["strategy"] },
+                    { t: "Legacy — how you'll be remembered decades from now.", k: ["leadership"] }
+                ]
+            },
+            {
+                q: "When you level up in life, it usually comes from:",
+                a: [
+                    { t: "Direct competition — proving yourself against others.", k: ["resilience"] },
+                    { t: "Reflection and self-study.", k: ["learning_structured"] },
+                    { t: "Learning from mentors, role models, or peers.", k: ["influence"] },
+                    { t: "Trial and error — jumping in until it clicks.", k: ["learning_do"] }
+                ]
+            }
+        ];
+
+        const DIMENSION_LABELS = {
+            leadership: "Strategic Leadership",
+            entrepreneur: "Entrepreneurial Instinct",
+            systems: "Systems Thinking",
+            influence: "Influence & Communication",
+            emotional_intel: "Emotional Intelligence",
+            resilience: "Resilience",
+            learning_structured: "Learning Agility",
+            learning_do: "Learning Agility",
+            strategy: "Strategic Thinking / Time Horizon",
+            risk: "Risk Appetite",
+            discipline: "Discipline"
+        };
+
+        const KEYWORD_HEURISTICS = {
+            systems: ["automate", "system", "template", "sop", "process", "categorize", "leverage", "delegate"],
+            leadership: ["decide", "allocate", "assign", "set direction", "plan", "priorities", "organize team"],
+            influence: ["ask", "clarify", "negotiate", "persuade", "pitch", "present", "align", "listen", "mediate"],
+            emotional_intel: ["empathy", "morale", "feelings", "de-escalate", "calm", "understand", "motivate"],
+            resilience: ["persist", "push through", "bounce back", "try again", "grind"],
+            learning_structured: ["manual", "tutorial", "course", "mentor", "document", "research"],
+            learning_do: ["experiment", "tinker", "trial", "prototype", "iterate"],
+            strategy: ["long-term", "strategic", "roadmap", "vision", "evaluate", "analyze"],
+            risk: ["bold", "risky", "leap", "bet", "upside", "contrarian"],
+            discipline: ["schedule", "routine", "checklist", "habits", "immediately", "on time"]
+        };
+
+        // State
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let answers = new Array(25).fill(null);
+        let scores = {};
+
+        // Initialize scores
+        Object.keys(DIMENSION_LABELS).forEach(key => {
+            scores[key] = 0;
+        });
+
+        // Initialize app
+        function init() {
+            checkForSharedResults();
+            checkResumeAvailability();
+            updateProgress();
+        }
+
+        function checkForSharedResults() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#data=')) {
+                try {
+                    const data = JSON.parse(atob(hash.substring(6)));
+                    answers = data.answers;
+                    calculateScores();
+                    showResults();
+                    return;
+                } catch (e) {
+                    console.error('Invalid shared link data');
+                }
+            }
+        }
+
+        function checkResumeAvailability() {
+            const saved = localStorage.getItem('prescod_assessment');
+            const resumeBtn = document.getElementById('resumeBtn');
+            if (saved) {
+                resumeBtn.style.display = 'inline-block';
+            } else {
+                resumeBtn.style.display = 'none';
+            }
+        }
+
+        function saveProgress() {
+            const data = {
+                currentRound,
+                currentQuestionIndex,
+                answers,
+                scores
+            };
+            localStorage.setItem('prescod_assessment', JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('prescod_assessment');
+            if (saved) {
+                const data = JSON.parse(saved);
+                currentRound = data.currentRound;
+                currentQuestionIndex = data.currentQuestionIndex;
+                answers = data.answers;
+                scores = data.scores;
+                return true;
+            }
+            return false;
+        }
+
+        function updateProgress() {
+            const completed = answers.filter(a => a !== null).length;
+            const percentage = (completed / 25) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${completed} / 25`;
+        }
+
+        function startAssessment() {
+            // Reset state
+            currentRound = 1;
+            currentQuestionIndex = 0;
+            answers = new Array(25).fill(null);
+            Object.keys(scores).forEach(key => scores[key] = 0);
+
+            // Force screen toggle (fix for mobile)
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('roundOverviewScreen').classList.add('hidden');
+            document.getElementById('questionsScreen').classList.remove('hidden');
+
+            // Render round 1
+            showQuestions();
+
+            // Smooth scroll to top (important for mobile)
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function resumeAssessment() {
+            if (loadProgress()) {
+                if (currentQuestionIndex >= 25) {
+                    showResults();
+                } else if (currentQuestionIndex % 5 === 0 && currentQuestionIndex > 0) {
+                    showRoundOverview();
+                } else {
+                    showQuestions();
+                }
+            }
+        }
+
+        function showQuestions() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('roundOverviewScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('questionsScreen').classList.remove('hidden');
+
+            const roundStart = (currentRound - 1) * 5;
+            const roundEnd = Math.min(roundStart + 5, 25);
+            
+            document.getElementById('roundTitle').textContent = `Round ${currentRound}`;
+            
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            for (let i = roundStart; i < roundEnd; i++) {
+                const questionDiv = createQuestionElement(i);
+                container.appendChild(questionDiv);
+            }
+
+            updateNavigationButtons();
+            updateProgress();
+        }
+
+        function createQuestionElement(index) {
+            const question = QUESTIONS[index];
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <div class="question-text">${index + 1}. ${question.q}</div>
+                <div class="choices" id="choices-${index}">
+                    ${question.a.map((choice, i) => `
+                        <div class="choice" onclick="selectChoice(${index}, ${i})">
+                            <input type="radio" name="q${index}" value="${i}" ${answers[index]?.choice === i ? 'checked' : ''}>
+                            ${String.fromCharCode(65 + i)}. ${choice.t}
+                        </div>
+                    `).join('')}
+                    <div class="choice" onclick="selectChoice(${index}, 4)">
+                        <input type="radio" name="q${index}" value="4" ${answers[index]?.choice === 4 ? 'checked' : ''}>
+                        E. Other (write in your own approach).
+                    </div>
+                </div>
+                ${answers[index]?.choice === 4 ? createOtherInput(index) : ''}
+            `;
+            return questionDiv;
+        }
+
+        function createOtherInput(index) {
+            const answer = answers[index];
+            return `
+                <div class="other-input">
+                    <textarea class="other-textarea" placeholder="Describe your approach..." 
+                              onchange="updateOtherText(${index}, this.value)">${answer?.otherText || ''}</textarea>
+                    <div class="tag-picker">
+                        <div class="tag-picker-title">Which strengths does this approach demonstrate? (optional)</div>
+                        <div class="tags">
+                            ${Object.entries(DIMENSION_LABELS).map(([key, label]) => `
+                                <div class="tag ${answer?.otherTags?.includes(label) ? 'selected' : ''}" 
+                                     onclick="toggleTag(${index}, '${label}')">${label}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectChoice(questionIndex, choiceIndex) {
+            if (!answers[questionIndex]) {
+                answers[questionIndex] = {};
+            }
+            
+            answers[questionIndex].choice = choiceIndex;
+            
+            if (choiceIndex === 4) {
+                // Show other input
+                const choicesDiv = document.getElementById(`choices-${questionIndex}`);
+                const existingOther = choicesDiv.querySelector('.other-input');
+                if (!existingOther) {
+                    choicesDiv.insertAdjacentHTML('beforeend', createOtherInput(questionIndex));
+                }
+            } else {
+                // Remove other input if it exists
+                const choicesDiv = document.getElementById(`choices-${questionIndex}`);
+                const otherInput = choicesDiv.querySelector('.other-input');
+                if (otherInput) {
+                    otherInput.remove();
+                }
+                answers[questionIndex].otherText = undefined;
+                answers[questionIndex].otherTags = undefined;
+            }
+
+            // Update radio button selection
+            const choices = document.querySelectorAll(`input[name="q${questionIndex}"]`);
+            choices.forEach((radio, i) => {
+                radio.checked = i === choiceIndex;
+                radio.parentElement.classList.toggle('selected', i === choiceIndex);
+            });
+
+            updateNavigationButtons();
+            saveProgress();
+        }
+
+        function updateOtherText(questionIndex, text) {
+            if (!answers[questionIndex]) {
+                answers[questionIndex] = { choice: 4 };
+            }
+            answers[questionIndex].otherText = text;
+            updateNavigationButtons();
+            saveProgress();
+        }
+
+        function toggleTag(questionIndex, tagLabel) {
+            if (!answers[questionIndex]) {
+                answers[questionIndex] = { choice: 4 };
+            }
+            if (!answers[questionIndex].otherTags) {
+                answers[questionIndex].otherTags = [];
+            }
+
+            const tags = answers[questionIndex].otherTags;
+            const index = tags.indexOf(tagLabel);
+            if (index > -1) {
+                tags.splice(index, 1);
+            } else {
+                tags.push(tagLabel);
+            }
+
+            // Update UI
+            const tagElement = event.target;
+            tagElement.classList.toggle('selected');
+            
+            saveProgress();
+        }
+
+        function updateNavigationButtons() {
+            const roundStart = (currentRound - 1) * 5;
+            const roundEnd = Math.min(roundStart + 5, 25);
+            
+            let allAnswered = true;
+            for (let i = roundStart; i < roundEnd; i++) {
+                const answer = answers[i];
+                if (!answer || answer.choice === undefined) {
+                    allAnswered = false;
+                    break;
+                }
+                if (answer.choice === 4 && (!answer.otherText || answer.otherText.trim() === '')) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+
+            document.getElementById('nextBtn').disabled = !allAnswered;
+            document.getElementById('backBtn').style.display = currentRound > 1 ? 'inline-block' : 'none';
+        }
+
+        function nextRound() {
+            calculateRoundScores();
+            
+            if (currentRound * 5 >= 25) {
+                showResults();
+            } else {
+                showRoundOverview();
+            }
+        }
+
+        function skipRound() {
+            const roundStart = (currentRound - 1) * 5;
+            const roundEnd = Math.min(roundStart + 5, 25);
+            
+            for (let i = roundStart; i < roundEnd; i++) {
+                if (!answers[i]) {
+                    answers[i] = { choice: 0 }; // Default to first choice
+                }
+            }
+            
+            nextRound();
+        }
+
+        function goBack() {
+            if (currentRound > 1) {
+                currentRound--;
+                showQuestions();
+            }
+        }
+
+        function calculateRoundScores() {
+            const roundStart = (currentRound - 1) * 5;
+            const roundEnd = Math.min(roundStart + 5, 25);
+            
+            for (let i = roundStart; i < roundEnd; i++) {
+                const answer = answers[i];
+                if (!answer) continue;
+
+                if (answer.choice === 4) {
+                    // Handle "Other" choice
+                    if (answer.otherTags && answer.otherTags.length > 0) {
+                        answer.otherTags.forEach(tagLabel => {
+                            const key = Object.keys(DIMENSION_LABELS).find(k => DIMENSION_LABELS[k] === tagLabel);
+                            if (key) {
+                                scores[key]++;
+                            }
+                        });
+                    } else if (answer.otherText) {
+                        // Use keyword heuristics
+                        const text = answer.otherText.toLowerCase();
+                        Object.entries(KEYWORD_HEURISTICS).forEach(([dimension, keywords]) => {
+                            if (keywords.some(keyword => text.includes(keyword))) {
+                                scores[dimension]++;
+                            }
+                        });
+                    }
+                } else {
+                    // Handle A-D choices
+                    const question = QUESTIONS[i];
+                    const choice = question.a[answer.choice];
+                    if (choice && choice.k) {
+                        choice.k.forEach(key => {
+                            scores[key]++;
+                        });
+                    }
+                }
+            }
+        }
+
+        function calculateScores() {
+            // Reset scores
+            Object.keys(scores).forEach(key => scores[key] = 0);
+            
+            // Calculate all scores
+            for (let i = 0; i < answers.length; i++) {
+                const answer = answers[i];
+                if (!answer) continue;
+
+                if (answer.choice === 4) {
+                    // Handle "Other" choice
+                    if (answer.otherTags && answer.otherTags.length > 0) {
+                        answer.otherTags.forEach(tagLabel => {
+                            const key = Object.keys(DIMENSION_LABELS).find(k => DIMENSION_LABELS[k] === tagLabel);
+                            if (key) {
+                                scores[key]++;
+                            }
+                        });
+                    } else if (answer.otherText) {
+                        // Use keyword heuristics
+                        const text = answer.otherText.toLowerCase();
+                        Object.entries(KEYWORD_HEURISTICS).forEach(([dimension, keywords]) => {
+                            if (keywords.some(keyword => text.includes(keyword))) {
+                                scores[dimension]++;
+                            }
+                        });
+                    }
+                } else {
+                    // Handle A-D choices
+                    const question = QUESTIONS[i];
+                    const choice = question.a[answer.choice];
+                    if (choice && choice.k) {
+                        choice.k.forEach(key => {
+                            scores[key]++;
+                        });
+                    }
+                }
+            }
+
+            // Combine learning dimensions
+            scores.learning_agility = (scores.learning_structured || 0) + (scores.learning_do || 0);
+            delete scores.learning_structured;
+            delete scores.learning_do;
+        }
+
+        function showRoundOverview() {
+            document.getElementById('questionsScreen').classList.add('hidden');
+            document.getElementById('roundOverviewScreen').classList.remove('hidden');
+
+            document.getElementById('overviewTitle').textContent = `Round ${currentRound} Overview`;
+
+            // Get top 3 dimensions
+            const sortedDimensions = Object.entries(scores)
+                .filter(([key]) => key !== 'learning_structured' && key !== 'learning_do')
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+
+            const topLabels = sortedDimensions.map(([key]) => DIMENSION_LABELS[key]);
+            document.getElementById('overviewSummary').textContent = 
+                `Your current top strengths are: ${topLabels.join(', ')}.`;
+
+            // Show score grid
+            const scoreGrid = document.getElementById('scoreGrid');
+            scoreGrid.innerHTML = '';
+            
+            Object.entries(scores).forEach(([key, value]) => {
+                if (key === 'learning_structured' || key === 'learning_do') return;
+                
+                const scoreItem = document.createElement('div');
+                scoreItem.className = 'score-item';
+                scoreItem.innerHTML = `
+                    <div class="score-label">${DIMENSION_LABELS[key]}</div>
+                    <div class="score-value">${value}</div>
+                `;
+                scoreGrid.appendChild(scoreItem);
+            });
+
+            // Show drivers (dimensions that increased most this round)
+            const driversSection = document.getElementById('driversSection');
+            driversSection.innerHTML = `
+                <h4>Key Drivers This Round</h4>
+                <ul>
+                    <li>${topLabels[0] || 'Strategic Leadership'} showed strong development</li>
+                    <li>${topLabels[1] || 'Systems Thinking'} emerged as a key strength</li>
+                    <li>${topLabels[2] || 'Influence & Communication'} demonstrated consistent growth</li>
+                </ul>
+            `;
+
+            updateProgress();
+        }
+
+        function continueToNextRound() {
+            currentRound++;
+            if (currentRound * 5 > 25) {
+                showResults();
+            } else {
+                showQuestions();
+            }
+        }
+
+        function showResults() {
+            calculateScores();
+            
+            document.getElementById('questionsScreen').classList.add('hidden');
+            document.getElementById('roundOverviewScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+
+            // Get sorted dimensions
+            const sortedDimensions = Object.entries(scores)
+                .filter(([key]) => key !== 'learning_structured' && key !== 'learning_do')
+                .sort((a, b) => b[1] - a[1]);
+
+            const topThree = sortedDimensions.slice(0, 3);
+            const topLabels = topThree.map(([key]) => DIMENSION_LABELS[key]);
+
+            document.getElementById('finalSummary').textContent = 
+                `Your strongest advantages are: ${topLabels.join(', ')}. These are the strengths that give you a competitive edge.`;
+
+            // Show results grid
+            const resultsGrid = document.getElementById('resultsGrid');
+            resultsGrid.innerHTML = '';
+            
+            sortedDimensions.forEach(([key, value]) => {
+                const dimensionItem = document.createElement('div');
+                dimensionItem.className = 'dimension-item';
+                dimensionItem.innerHTML = `
+                    <div class="dimension-name">${DIMENSION_LABELS[key]}</div>
+                    <div class="dimension-score">${value}</div>
+                `;
+                resultsGrid.appendChild(dimensionItem);
+            });
+
+            // Show Top Edges
+            const maxScore = Math.max(...sortedDimensions.map(([, score]) => score));
+            const topEdges = sortedDimensions.filter(([, score]) => score >= maxScore - 1 && score >= 3);
+            
+            const topEdgesSection = document.getElementById('topEdges');
+            if (topEdges.length >= 3) {
+                topEdgesSection.innerHTML = `
+                    <h3>🏆 Top Edges</h3>
+                    ${topEdges.slice(0, 3).map(([key, score]) => `
+                        <div class="edge-item">
+                            <strong>${DIMENSION_LABELS[key]}</strong> (${score}) - Your strongest competitive advantage
+                        </div>
+                    `).join('')}
+                `;
+            } else {
+                topEdgesSection.innerHTML = `
+                    <h3>🏆 Top Edges</h3>
+                    ${topThree.map(([key, score]) => `
+                        <div class="edge-item">
+                            <strong>${DIMENSION_LABELS[key]}</strong> (${score}) - Your strongest competitive advantage
+                        </div>
+                    `).join('')}
+                `;
+            }
+
+            // Show Growth Levers
+            const growthLevers = sortedDimensions.filter(([, score]) => score <= 2).slice(-3).reverse();
+            
+            const growthLeversSection = document.getElementById('growthLevers');
+            if (growthLevers.length > 0) {
+                growthLeversSection.innerHTML = `
+                    <h3>🚀 Growth Levers</h3>
+                    ${growthLevers.map(([key, score]) => `
+                        <div class="lever-item">
+                            <strong>${DIMENSION_LABELS[key]}</strong> (${score}) - High-impact development opportunity
+                        </div>
+                    `).join('')}
+                `;
+            } else {
+                growthLeversSection.innerHTML = '';
+            }
+
+            updateProgress();
+            
+            // Clear saved progress
+            localStorage.removeItem('prescod_assessment');
+        }
+
+        function copyShareLink() {
+            const data = { answers };
+            const encoded = btoa(JSON.stringify(data));
+            const shareUrl = `${window.location.origin}${window.location.pathname}#data=${encoded}`;
+            
+            navigator.clipboard.then ? 
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Share link copied to clipboard!');
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(shareUrl);
+                }) : 
+                fallbackCopyTextToClipboard(shareUrl);
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0"; // Make it invisible
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('Share link copied to clipboard!');
+            } catch (err) {
+                alert('Could not copy link. Please copy manually: ' + text);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function startOver() {
+            localStorage.removeItem('prescod_assessment');
+            window.location.hash = '';
+            window.location.reload();
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
